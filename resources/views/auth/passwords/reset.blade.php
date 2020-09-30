@@ -1,65 +1,73 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Sen Jaaba </title>
+        <meta name="description" content="Solution d’Analyse et de Traitement de stock">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{{asset('assets/images/jaaba.png')}}">
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('password.update') }}">
-                        @csrf
+        <!-- App css -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Merriweather:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,300,300i,400,400i,600,600i,700,700i,900,900i" rel="stylesheet">
+        <link href="{{asset('assets/css/login.css')}}" rel="stylesheet" type="text/css" id="app-stylesheet" />
 
-                        <input type="hidden" name="token" value="{{ $token }}">
+</head>
 
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+<body>
+    <div class="container-fluid">
+        <div class="row no-gutter">
+            <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
+                <div class="col-md-8 col-lg-6">
+                    <div class="login d-flex align-items-center py-5">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-9 mb-4 col-lg-8 mx-auto">
+                                    <img src="{{asset('assets/images/jaaba-l.png')}}" class="img-fluid"/>
+                                    <form class="mt-4" method="POST" action="{{ route('password.update') }}">
+                                        @csrf
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
+                                        <input type="hidden" name="token" value="{{ $token }}">
+                                        <div class="form-label-group">
+                                            <input type="email" id="inputEmail" name="email" :value="old('email')" class="form-control" placeholder="Email address" required autofocus>
+                                            <label for="inputEmail">Adresse email</label>
+                                        </div>
 
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                        <div class="form-label-group">
+                                            <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                                            <label for="inputPassword">Mot de passe</label>
+                                        </div>
+
+                                        <div class="form-label-group">
+                                            <input type="password" name="password_confirmation" id="password-confirm" class="form-control" placeholder="Password Confirm" required>
+                                            <label for="password-confirm">Mot de passe Confirmation</label>
+                                        </div>
+
+                                        <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Reset</button>
+                                    </form>
+
+                                    <div class="col-md-9 mb-4 col-lg-8 mx-auto fixed-bottom">
+                                        <div class="text-right">
+                                            2020 © Sen Jaaba by <a href="#">ADJA M. SY & AWA DIOP</a>
+                                        </div>
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Reset Password') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-@endsection
+
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js "></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.js "></script>
+</body>
+
+</html>
