@@ -33,7 +33,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin']], function () {
     Route::get('findRayon', 'ProduitController@findRayon')->name('rayon.find');
 
     Route::resource('utilisateur', 'UserController');
-    Route::get('profil', 'UserController@profile')->name('user.profile');
+    Route::get('profil', 'UserController@profile_me')->name('user.profile');
     Route::put('info-profil', 'UserController@update_profile')->name('user.update_profile');
     Route::put('pass-profil', 'UserController@update_password')->name('user.update_password');
 

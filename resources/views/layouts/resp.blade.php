@@ -137,7 +137,7 @@
                 </li>
 
                 <li class="dropdown notification-list">
-                    <a href="profile.html" class="nav-link nav-user mr-0 waves-effect waves-light">
+                    <a href="/me" class="nav-link nav-user mr-0 waves-effect waves-light">
                         <img src="https://ui-avatars.com/api/?name={{$auth->name}}&amp;color=7F9CF5&amp;background=EBF4FF" alt="user-image" class="rounded-circle">
                     </a>
 
@@ -160,7 +160,7 @@
 
             <!-- LOGO -->
             <div class="logo-box">
-                <a href="/admin/dashboard" class="logo text-center logo-light">
+                <a href="/dashboard" class="logo text-center logo-light">
                     <span class="logo-lg">
                         <img src="{{asset('assets/images/jaaba.png')}}" alt="" height="50">
                     </span>
@@ -192,21 +192,21 @@
                     <ul class="metismenu" id="side-menu">
 
                         <li>
-                            <a href="/admin/dashboard" :active="request()->routeIs('dashboard')">
+                            <a href="/dashboard" :active="request()->routeIs('dashboard')">
                                 <i class="fe-airplay"></i>
                                 <span> Dashboard </span>
                             </a>
                         </li>
 
                         <li>
-                            <a href="/admin/categorie" :is-active="request()->routeIs('categorie.index')">
+                            <a href="/categorie" :is-active="request()->routeIs('categorie.index')">
                                 <i class="fe-pie-chart"></i>
                                 <span> Categories </span>
                             </a>
                         </li>
 
                         <li>
-                            <a href="/admin/produit" :is-active="request()->routeIs('produit.index')">
+                            <a href="/produit" :is-active="request()->routeIs('produit.index')">
                                 <i class="fe-briefcase"></i>
                                 <span> Produits </span>
                             </a>

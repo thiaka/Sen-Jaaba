@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.resp')
 
 @section('content')
     <!-- Start Content-->
@@ -10,7 +10,7 @@
                 <div class="page-title-box">
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="/admin/dashboard">See Jaaba</a></li>
+                            <li class="breadcrumb-item"><a href="/dashboard">See Jaaba</a></li>
                             <li class="breadcrumb-item active">Profil</li>
                         </ol>
                     </div>
@@ -23,7 +23,7 @@
         <div class="row">
             <div class="col-md-4 col-lg-4 col-xl-4">
                 <div class="card-box text-center">
-                    <img src="{{ Auth::user()->profile_photo_url }}" class="rounded-circle avatar-lg img-thumbnail" alt="profile-image">
+                    <img src="https://ui-avatars.com/api/?name={{$profile->name}}&amp;color=7F9CF5&amp;background=EBF4FF" class="rounded-circle avatar-lg img-thumbnail" alt="profile-image">
 
                     <h4 class="mb-0">{{$profile->name}}</h4>
 
@@ -59,16 +59,16 @@
                     <div class="tab-content">
                         <div class="tab-pane active" id="aboutme">
 
-                            <form method="POST" id="identicalForm" action="{{ route('user.update_profile') }}">
+                            <form method="POST" id="identicalForm" action="{{ route('user.update_profile_r') }}">
                                 @csrf
                                 @method('PUT')
                                 <h5 class="mb-4 text-uppercase"><i class="mdi mdi-account-circle mr-1"></i> Informations personnelles</h5>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="firstname">Prénom(s) Nom</label>
                                             <input type="hidden" value="{{$profile->id}}" name="id">
-                                            <input type="text" class="form-control" value="{{$profile->name}}" name="name" id="firstname" placeholder="Entrez le(s) prénom(s)">
+                                            <label for="firstname">Prénom(s) Nom</label>
+                                            <input type="text" class="form-control" name="name" value="{{$profile->name}}" id="firstname" placeholder="Entrez le(s) prénom(s)">
                                         </div>
                                     </div>
                                     <!-- end col -->
@@ -79,7 +79,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="useremail">Email</label>
-                                            <input type="email" class="form-control" value="{{$profile->email}}" name="email" id="useremail" placeholder="Entrez l'adresse email">
+                                            <input type="email" class="form-control" name="email" value="{{$profile->email}}" id="useremail" placeholder="Entrez l'adresse email">
                                         </div>
                                     </div>
                                     <!-- end col -->
@@ -125,7 +125,7 @@
                                 @endif
                             </div>
 
-                            <form method="POST" id="identicalForm" action="{{ route('user.update_password') }}">
+                            <form method="POST" id="identicalForm" action="{{ route('user.update_password_r') }}">
                                 @csrf
                                 @method('PUT')
                                 <h5 class="mb-4 text-uppercase"><i class="mdi mdi-account-circle mr-1"></i> Mot de passe </h5>

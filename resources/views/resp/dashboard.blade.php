@@ -10,7 +10,7 @@
                 <div class="page-title-box">
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">Sen Jaaba</a></li>
+                            <li class="breadcrumb-item"><a href="/dashboard">Sen Jaaba</a></li>
                             <li class="breadcrumb-item active">Dashboard</li>
                         </ol>
                     </div>

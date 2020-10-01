@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\User;
+use App\Models\Profil;
 
 class UserController extends Controller
 {
@@ -19,7 +20,8 @@ class UserController extends Controller
     {
         $auth = auth()->user();
         $users = User::paginate(10);
-        return view('admin.user.index', compact('users', 'auth'));
+        $profils = Profil::all();
+        return view('admin.user.index', compact('users', 'auth', 'profils'));
     }
 
     /**
@@ -28,6 +30,21 @@ class UserController extends Controller
      */
     public function profile()
     {
+        $auth = auth()->user();
+        $user = auth()->user();
+        $user_id = $user->id;
+
+        $profile = User::find($user_id);
+        return view('resp.profile', compact('profile', 'auth'));
+    }
+
+    /**
+     *
+     * Display the user auth profile
+     */
+    public function profile_me()
+    {
+        $auth = auth()->user();
         $user = auth()->user();
         $user_id = $user->id;
 
@@ -43,21 +60,18 @@ class UserController extends Controller
 
     public function update_profile(Request $request)
     {
-        $user = auth()->user();
-
+        $user = User::where('id', $request->id)->first();
+        // dd($request->all());
         $this->validate($request, [
             'name' => 'required|string|max:255',
-            'email' => "required|email|unique:users,email, $user->id",
+            'email' => "required|email|unique:users,email, $request->id",
         ]);
 
         $user->name = $request->name;
         $user->email = $request->email;
 
-        if($request->has('password') && $request->password !== null){
-            $user->password = bcrypt($request->password);
-        }
-
-        if($request->hasFile('photo')){
+        if($request->hasFile('photo'))
+        {
             $photo = $request->photo;
             $image_new_name = time() . '.' . $photo->getClientOriginalExtension();
             $photo->move('storage/users/', $image_new_name);
@@ -67,26 +81,23 @@ class UserController extends Controller
         $user->save();
         Session::flash('success', 'Le profil a été modifié avec succès');
 
-        return view('admin.profile');
+        return redirect()->back();
     }
 
     public function update_profile_r(Request $request)
     {
-        $user = auth()->user();
-
+        $user = User::where('id', $request->id)->first();
+        // dd($request->all());
         $this->validate($request, [
             'name' => 'required|string|max:255',
-            'email' => "required|email|unique:users,email, $user->id",
+            'email' => "required|email|unique:users,email, $request->id",
         ]);
 
         $user->name = $request->name;
         $user->email = $request->email;
 
-        if($request->has('password') && $request->password !== null){
-            $user->password = bcrypt($request->password);
-        }
-
-        if($request->hasFile('photo')){
+        if($request->hasFile('photo'))
+        {
             $photo = $request->photo;
             $image_new_name = time() . '.' . $photo->getClientOriginalExtension();
             $photo->move('storage/users/', $image_new_name);
@@ -96,7 +107,7 @@ class UserController extends Controller
         $user->save();
         Session::flash('success', 'Le profil a été modifié avec succès');
 
-        return view('resp.profile');
+        return redirect()->back();
     }
 
     public function update_password(Request $request)
@@ -114,7 +125,7 @@ class UserController extends Controller
                         ->withInput();
         }
 
-        $user = auth()->user();
+        $user = User::where('id', $request->id)->first();
         if(Hash::check($request->nouveau_mot_de_passe, $user->password)){
             $user->fill([
                 'password' => Hash::make($request->password)
@@ -143,7 +154,7 @@ class UserController extends Controller
                         ->withInput();
         }
 
-        $user = auth()->user();
+        $user = User::where('id', $request->id)->first();
         if(Hash::check($request->nouveau_mot_de_passe, $user->password)){
             $user->fill([
                 'password' => Hash::make($request->password)
@@ -180,15 +191,14 @@ class UserController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|unique:users,email',
-            'type' => 'required',
-            'password' => 'required',
+            'profil_id' => 'required',
         ]);
 
         User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'type' => $request->type,
-            'password' => Hash::make($request->password),
+            'profil_id' => $request->profil_id,
+            'password' => Hash::make(123456),
         ]);
 
         Session::flash('success', 'Un nouveau utilisateur a été crée avec succès');
@@ -228,19 +238,22 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        // $u_up = User::where('id', $user->id)->first();
+        // dd($request->all());
+        $user_p = User::where('id', $request->id)->first();
 
         $this->validate($request, [
             'name' => 'required',
-            'email' => 'sometimes|required|email|unique:users,email,'.$user->id,
-            'type' => 'required',
-            'password' => 'required',
+            'email' => "required|email|unique:users,email, $request->id",
+            'profil_id' => 'required',
+            // 'password' => 'required',
         ]);
 
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->type = $request->type;
-        $user->password = Hash::make($request->password);
-        $user->save();
+        $user_p->name = $request->name;
+        $user_p->email = $request->email;
+        $user_p->profil_id = $request->profil_id;
+        $user_p->password = Hash::make(123456);
+        $user_p->save();
 
         Session::flash('success', 'L\'utilisateur a été modifié avec succès');
         return redirect()->route('utilisateur.index');

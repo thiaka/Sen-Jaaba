@@ -65,7 +65,7 @@
                                 @foreach($produits as $produit)
                                 <tr>
                                     <td class="text-center">
-                                        <img src="{{asset('assets/images/users/avatar-1.jpg')}}" alt="user-image" class="rounded-circle" height="30">
+                                        <img src="{{$produit->photo}}" alt="p-{{$produit->designation}}" class="rounded-circle" height="30">
                                     </td>
                                     <td class="text-center">
                                         {{$produit->designation}}
@@ -80,7 +80,7 @@
                                         {{$produit->categorie->nom}}
                                     </td>
                                     <td class="text-center">
-                                        Rayon
+                                        {{$produit->rayon_libelle}}
                                     </td>
                                     <td class="text-center">
                                         <button class="btn btn-xs btn-primary" data-toggle="modal" data-target="#view-modal-{{$produit->id}}">
@@ -396,15 +396,13 @@
 
                 var categorie_id = $(this).val();
                 var div = $('.rayon_id').parent();
-
                 var op = " ";
-
                 $.ajax ({
                     type : 'get',
                     url: '{!!URL::to('/admin/findRayon')!!}',
                     data : { 'id' : categorie_id },
                     success : function(data){
-                        op+='<option value="0" >Choisir le rayon</option>';
+                        op+='<option>Choisir le rayon</option>';
                         for(var i=0;i<data.length;i++){
                             op+='<option value="' + data[i].id + '">' + data[i].libelle + '</option>';
                         }

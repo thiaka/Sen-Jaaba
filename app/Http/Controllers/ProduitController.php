@@ -20,7 +20,9 @@ class ProduitController extends Controller
     public function index()
     {
         $auth = auth()->user();
-        $produits = Produit::paginate(10);
+        $produits = Produit::join('produit_rayons', 'produits.id', 'produit_rayons.produit_id')
+            ->join('rayons', 'produit_rayons.rayon_id', 'rayons.id')
+            ->select('produits.*', 'rayons.libelle as rayon_libelle')->paginate(10);
         $categories = Categorie::all();
         $rayons = Rayon::all();
         return view('admin.produit.index', compact('produits', 'categories', 'rayons', 'auth'));
@@ -29,7 +31,9 @@ class ProduitController extends Controller
     public function indexResp()
     {
         $auth = auth()->user();
-        $produits = Produit::paginate(10);
+        $produits = Produit::join('produit_rayons', 'produits.id', 'produit_rayons.produit_id')
+            ->join('rayons', 'produit_rayons.rayon_id', 'rayons.id')
+            ->select('produits.*', 'rayons.libelle as rayon_libelle')->paginate(10);
         $categories = Categorie::all();
         $rayons = Rayon::all();
         return view('resp.produit.index', compact('produits', 'categories', 'rayons', 'auth'));
@@ -123,13 +127,13 @@ class ProduitController extends Controller
             $photo->move('storage/produits/', $image_new_name);
             $produit->photo = '/storage/produits/'.$image_new_name;
         }
-
         // $produit->rayons()->attach($request->rayons);
 
         ProduitRayon::create([
             'produit_id' => $produit->id,
             'rayon_id' => $request->rayon_id,
         ]);
+        $produit->save();
 
         Session::flash('success', 'Un nouveau produit a été crée avec succès');
         return redirect()->route('produit.index');
@@ -213,6 +217,14 @@ class ProduitController extends Controller
         $produit->prix = $request->prix;
         $produit->quantite = $request->quantite;
         $produit->categorie_id = $request->categorie_id;
+
+        if ($request->hasFile('photo')) {
+            $photo = $request->photo;
+            $image_new_name = time() . '.' . $photo->getClientOriginalExtension();
+            $photo->move('storage/produits/', $image_new_name);
+            $produit->photo = '/storage/produits/'.$image_new_name;
+        }
+
         $produit->save();
 
         Session::flash('success', 'Le produit a été modifié avec succès');
@@ -233,6 +245,14 @@ class ProduitController extends Controller
         $produit->prix = $request->prix;
         $produit->quantite = $request->quantite;
         $produit->categorie_id = $request->categorie_id;
+
+        if ($request->hasFile('photo')) {
+            $photo = $request->photo;
+            $image_new_name = time() . '.' . $photo->getClientOriginalExtension();
+            $photo->move('storage/produits/', $image_new_name);
+            $produit->photo = '/storage/produits/'.$image_new_name;
+        }
+
         $produit->save();
 
         Session::flash('success', 'Le produit a été modifié avec succès');

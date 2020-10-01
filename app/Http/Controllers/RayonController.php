@@ -54,10 +54,6 @@ class RayonController extends Controller
      */
     public function store(Request $request)
     {
-        // $data = Rayons::join('categories_rayons', 'rayons.id', 'categories_rayons.rayons_id')
-        //                 ->join('categories', 'categories_rayons.categories_id', 'categories.id')
-        //                 ->where('categories_rayons.categories_id', 3)->get();
-        // dd($data);
         $this->validate($request, [
             'libelle' => 'required|unique:rayons,libelle',
             'quantite_stock' => 'required',
@@ -103,11 +99,10 @@ class RayonController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Rayons $rayon)
+    public function update(Request $request, Rayon $rayon)
     {
-        // dd($request->all());
         $this->validate($request, [
-            'libelle' => 'required|unique:rayons,libelle,'.$rayon->id,
+            'libelle' => "required|unique:rayons,libelle,$rayon->id",
             'quantite_stock' => 'required',
         ]);
 
@@ -115,7 +110,6 @@ class RayonController extends Controller
         $rayon->quantite_stock = $request->quantite_stock;
 
         $rayon->categories()->sync($request->categories);
-
         $rayon->save();
 
         Session::flash('success', 'Le rayon a été modifié avec succès');
