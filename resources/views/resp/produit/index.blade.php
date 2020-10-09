@@ -120,7 +120,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ route('pro.store') }}" method="POST">
+                <form action="{{ route('pro.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="row">
@@ -191,6 +191,19 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label for="field-1" class="control-label">Photo</label>
+                                    <input type="file" class="form-control @error('photo') is-invalid @enderror" id="photo" name="photo">
+                                    @error('photo')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Annuler</button>
@@ -212,7 +225,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ route('pro.update', [$produit->id]) }}" method="POST">
+                <form action="{{ route('pro.update', [$produit->id]) }}" method="POST" enctype="multipart/form-data">
                     @method('PUT')
                     @csrf
                     <div class="modal-body">
@@ -277,6 +290,19 @@
                                         <option disabled>Choisir le rayon</option>
                                     </select>
                                     @error('rayon_id')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label for="field-1" class="control-label">Photo</label>
+                                    <input type="file" class="form-control @error('photo') is-invalid @enderror" id="photo" name="photo">
+                                    @error('photo')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
