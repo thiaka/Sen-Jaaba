@@ -94,7 +94,7 @@ class ProduitController extends Controller
     public function findRayon_r(Request $request)
     {
         $data = Rayon::join('categorie_rayon', 'rayons.id', 'categorie_rayon.rayon_id')
-                        ->where('categories_rayon.categorie_id',  $request->id)->get();
+                        ->where('categorie_rayon.categorie_id',  $request->id)->get();
         return response()->json($data);
     }
 
@@ -127,7 +127,6 @@ class ProduitController extends Controller
             $photo->move('storage/produits/', $image_new_name);
             $produit->photo = '/storage/produits/'.$image_new_name;
         }
-        // $produit->rayons()->attach($request->rayons);
 
         ProduitRayon::create([
             'produit_id' => $produit->id,

@@ -71,6 +71,46 @@ class CategorieSeeder extends Seeder
             ]
         ];
 
+        $cat_ray = [
+            [
+                'rayon_id' => 1,
+                'categorie_id' => 2,
+            ],
+            [
+                'rayon_id' => 1,
+                'categorie_id' => 3,
+            ],
+            [
+                'rayon_id' => 1,
+                'categorie_id' => 4,
+            ],
+            [
+                'rayon_id' => 1,
+                'categorie_id' => 9,
+            ],
+            [
+                'rayon_id' => 2,
+                'categorie_id' => 8,
+            ],
+            [
+                'rayon_id' => 3,
+                'categorie_id' => 1,
+            ],
+            [
+                'rayon_id' => 3,
+                'categorie_id' => 6,
+            ],
+            [
+                'rayon_id' => 4,
+                'categorie_id' => 3,
+            ],
+            [
+                'rayon_id' => 4,
+                'categorie_id' => 9,
+            ],
+        ];
+
         DB::table('categories')->insert($categories);
+        DB::table('rayon_categorie')->insert($cat_ray);
     }
 }

@@ -17,7 +17,7 @@ class RayonController extends Controller
     public function index()
     {
         $auth = auth()->user();
-        $rayons = Rayon::paginate();
+        $rayons = Rayon::paginate(5);
         $categories = Categorie::all();
         return view('admin.rayon.index', compact('rayons', 'categories', 'auth'));
     }

@@ -73,10 +73,6 @@
                                             <span class="btn- btn-xs @if ($user->profil->nom == 'Administrateur') btn-danger @elseif($user->profil->nom == 'Responsable') btn-success @endif text-uppercase text-black">{{$user->profil->nom}}</span>
                                         </td>
                                         <td class="text-center">
-
-                                            <button type="button" class="btn btn-xs btn-success" data-target="">
-                                                <i class="mdi mdi-eye"></i>
-                                            </button>
                                             <button data-toggle="modal" data-target="#edit-modal{{$user->id}}" class="btn btn-xs btn-warning" >
                                                 <i class="mdi mdi-pencil"></i>
                                             </button>

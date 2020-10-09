@@ -55,15 +55,21 @@
                             <table class="table table-centered table-nowrap table-hover mb-0">
                                 <thead class="thead-light">
                                     <tr>
-                                        <th>Nom catégorie</th>
+                                        <th class="text-center">Nom catégorie</th>
+                                        <th class="text-center">Rayon</th>
                                         <th class="text-center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($categories as $categorie)
                                         <tr>
-                                            <td>
+                                            <td class="text-center">
                                                 {{$categorie->nom}}
+                                            </td>
+                                            <td class="text-center">
+                                                @foreach($categorie->rayons as $cat)
+                                                    <button class="btn btn-success btn-xs">{{ $cat->libelle }}</button>
+                                                @endforeach
                                             </td>
                                             <td class="text-center">
                                                 <button type="button" class="btn btn-xs btn-warning" data-toggle="modal" data-target="#edit-modal-{{$categorie->id}}">
@@ -98,6 +104,7 @@
     </div>
     <!-- end container-fluid -->
 
+    <!-- // formaulaire (modal) d'ajout -->
     <div id="add-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -111,12 +118,27 @@
                     @csrf
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-md-2"></div>
-                            <div class="col-md-8">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="field-1" class="control-label">Nom Categorie</label>
                                     <input type="text" class="form-control @error('nom') is-invalid @enderror" id="nom" name="nom" placeholder="Nom">
                                     @error('nom')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="field-1" class="control-label">Rayon</label>
+                                    <select multiple class="form-control @error('rayon_id') is-invalid @enderror" name="rayons[]">
+                                        <option disabled>Choisir le ou les rayons</option>
+                                        @foreach($rayons as $rayon)
+                                            <option value="{{$rayon->id}}">{{$rayon->libelle}}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('rayons[]')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -135,6 +157,7 @@
     </div>
 
     @foreach($categories as $categorie)
+        <!-- // formulaire (modal) d'edition -->
         <div id="edit-modal-{{$categorie->id}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -149,12 +172,28 @@
                         @csrf
                         <div class="modal-body">
                             <div class="row">
-                                <div class="col-md-2"></div>
-                                <div class="col-md-8">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="field-1" class="control-label">Nom Categorie</label>
                                         <input type="text" class="form-control @error('nom') is-invalid @enderror" value="{{$categorie->nom}}" name="nom" placeholder="Nom">
                                         @error('nom')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="field-1" class="control-label">Rayon</label>
+                                        <select multiple class="form-control @error('rayon_id') is-invalid @enderror" name="rayons[]">
+                                            <option disabled>Choisir le ou les rayons</option>
+                                            @foreach ($rayons as $cat)
+                                                <option @if(in_array($cat->id, $categorie->rayons->pluck('id')->toArray())) selected
+                                                @endif value="{{ $cat->id }}">{{ $cat->libelle }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('rayons[]')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -172,6 +211,7 @@
             </div>
         </div>
 
+        <!-- // formulaire (modal) de suppression -->
         <div id="delete-modal-{{$categorie->id}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">

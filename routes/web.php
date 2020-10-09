@@ -23,7 +23,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin']], function () {
     Route::get('/dashboard', 'DashboardController@index')->name('home');
 
     Route::resource('/categorie', 'CategorieController');
-    Route::get('categorie-resultat', 'CategoriesController@search')->name('categorie.search');
+    Route::get('categorie-resultat', 'CategorieController@search')->name('categorie.search');
 
     Route::resource('/rayon', 'RayonController');
     Route::get('rayon-resultat', 'RayonController@search')->name('rayon.search');
@@ -42,18 +42,18 @@ Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin']], function () {
 Route::group(['middleware' => ['isResp']], function () {
     Route::get('/dashboard', 'DashboardController@user')->name('resp.home');
 
-    Route::get('responsable/categorie', 'CategoriesController@indexResp')->name('cat');
-    Route::post('responsable/categorie', 'CategoriesController@storeResp')->name('cat.store');
-    Route::put('responsable/categorie/{categorie}', 'CategoriesController@updateResp')->name('cat.update');
-    Route::delete('responsable/categorie/{categorie}', 'CategoriesController@destroyResp')->name('cat.destroy');
-    Route::get('categorie-resultats', 'CategoriesController@c_search')->name('cat.search');
+    Route::get('categorie', 'CategorieController@indexResp')->name('cat');
+    Route::post('responsable/categorie', 'CategorieController@storeResp')->name('cat.store');
+    Route::put('responsable/categorie/{categorie}', 'CategorieController@updateResp')->name('cat.update');
+    Route::delete('responsable/categorie/{categorie}', 'CategorieController@destroyResp')->name('cat.destroy');
+    Route::get('categorie-resultats', 'CategorieController@c_search')->name('cat.search');
 
     Route::get('me', 'UserController@profile')->name('resp.profile');
     Route::put('info-profil-r', 'UserController@update_profile_r')->name('user.update_profile_r');
     Route::put('pass-profil-r', 'UserController@update_password_r')->name('user.update_password_r');
 
-    Route::get('responsable/produit', 'ProduitController@indexResp')->name('prod');
-    Route::get('/findRayonR', 'ProduitController@findRayon_r')->name('r.find');
+    Route::get('produit', 'ProduitController@indexResp')->name('prod');
+    Route::get('findRayonR', 'ProduitController@findRayon_r')->name('r.find');
     Route::post('responsable/produit', 'ProduitController@storeResp')->name('pro.store');
     Route::put('responsable/produit/{produit}', 'ProduitController@updateResp')->name('pro.update');
     Route::delete('responsable/produit/{produit}', 'ProduitController@destroyResp')->name('pro.destroy');

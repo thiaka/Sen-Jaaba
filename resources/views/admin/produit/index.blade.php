@@ -52,7 +52,6 @@
                         <table class="table table-centered table-nowrap table-hover mb-0">
                             <thead class="thead-light">
                                 <tr>
-                                    <th class="text-center">Photo</th>
                                     <th class="text-center">Nom</th>
                                     <th class="text-center">Prix</th>
                                     <th class="text-center">Quantite</th>
@@ -64,9 +63,6 @@
                             <tbody>
                                 @foreach($produits as $produit)
                                 <tr>
-                                    <td class="text-center">
-                                        <img src="{{$produit->photo}}" alt="p-{{$produit->designation}}" class="rounded-circle" height="30">
-                                    </td>
                                     <td class="text-center">
                                         {{$produit->designation}}
                                     </td>
@@ -83,10 +79,6 @@
                                         {{$produit->rayon_libelle}}
                                     </td>
                                     <td class="text-center">
-                                        <button class="btn btn-xs btn-primary" data-toggle="modal" data-target="#view-modal-{{$produit->id}}">
-                                            <i class="mdi mdi-eye"></i>
-                                        </button>
-
                                         <button class="btn btn-xs btn-warning" data-toggle="modal" data-target="#edit-modal-{{$produit->id}}">
                                             <i class="mdi mdi-pencil"></i>
                                         </button>
@@ -132,17 +124,6 @@
                     @csrf
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="field-1" class="control-label">Photo</label>
-                                    <input type="file" class="form-control @error('photo') is-invalid @enderror" id="photo" name="photo">
-                                    @error('photo')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="field-1" class="control-label">Nom</label>
@@ -236,17 +217,6 @@
                     @csrf
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="field-1" class="control-label">Photo</label>
-                                    <input type="file" class="form-control @error('photo') is-invalid @enderror" id="photo" name="photo">
-                                    @error('photo')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="field-1" class="control-label">Nom</label>

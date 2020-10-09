@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.resp')
 
 @section('content')
     <!-- Start Content-->
@@ -10,11 +10,11 @@
                 <div class="page-title-box">
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="/admin/dashboard">See Jaaba</a></li>
+                            <li class="breadcrumb-item"><a href="/dashboard">Sen Jaaba</a></li>
                             <li class="breadcrumb-item active">Categories</li>
                         </ol>
                     </div>
-                    <h4 class="page-title">Categories</h4>
+                    <h4 class="page-title">Recherche Categorie: "{{$search_query}}"</h4>
                 </div>
             </div>
         </div>
@@ -32,7 +32,7 @@
             </div>
 
             <div class="col-md-6">
-                <form action="{{ route('categorie.search') }}" method="get">
+                <form action="{{ route('cat.search') }}" method="get">
                     <div class="input-group">
                         <input type="text" name="search_query" class="form-control" placeholder="Rechercher une categorie">
                         <span class="input-group-append">
@@ -46,8 +46,8 @@
         <!-- end row-->
 
         <div class="row">
-            <div class="col-md-3 col-lg-2"></div>
-            <div class="col-md-6 col-lg-8">
+            <div class="col-md-3 col-lg-3"></div>
+            <div class="col-md-6 col-lg-6">
                 <div class="card">
                     <div class="card-body">
 
@@ -55,21 +55,15 @@
                             <table class="table table-centered table-nowrap table-hover mb-0">
                                 <thead class="thead-light">
                                     <tr>
-                                        <th class="text-center">Nom catégorie</th>
-                                        <th class="text-center">Rayon</th>
+                                        <th>Nom catégorie</th>
                                         <th class="text-center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($categories as $categorie)
                                         <tr>
-                                            <td class="text-center">
+                                            <td>
                                                 {{$categorie->nom}}
-                                            </td>
-                                            <td class="text-center">
-                                                @foreach($categorie->rayons as $cat)
-                                                    <button class="btn btn-success btn-xs">{{ $cat->libelle }}</button>
-                                                @endforeach
                                             </td>
                                             <td class="text-center">
                                                 <button type="button" class="btn btn-xs btn-warning" data-toggle="modal" data-target="#edit-modal-{{$categorie->id}}">
@@ -104,7 +98,7 @@
     </div>
     <!-- end container-fluid -->
 
-    <!-- // formaulaire (modal) d'ajout -->
+    <!-- // ** formaulaire (modal) d'ajout -->
     <div id="add-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -114,7 +108,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ route('categorie.store') }}" method="POST">
+                <form action="{{ route('cat.store') }}" method="POST">
                     @csrf
                     <div class="modal-body">
                         <div class="row">
@@ -157,7 +151,7 @@
     </div>
 
     @foreach($categories as $categorie)
-        <!-- // formulaire (modal) d'edition -->
+        <!-- // ** formulaire (modal) d'edition -->
         <div id="edit-modal-{{$categorie->id}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -167,7 +161,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form action="{{ route('categorie.update', [$categorie->id]) }}" method="POST">
+                    <form action="{{ route('cat.update', [$categorie->id]) }}" method="POST">
                         @method('PUT')
                         @csrf
                         <div class="modal-body">
@@ -211,13 +205,13 @@
             </div>
         </div>
 
-        <!-- // formulaire (modal) de suppression -->
+        <!-- // ** formulaire (modal) de suppression -->
         <div id="delete-modal-{{$categorie->id}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
 
 
-                    <form action="{{ route('categorie.destroy', [$categorie->id]) }}" method="POST">
+                    <form action="{{ route('cat.destroy', [$categorie->id]) }}" method="POST">
                         @method('DELETE')
                         @csrf
                         <div class="swal2-container swal2-center swal2-fade swal2-shown" style="overflow-y: auto;">

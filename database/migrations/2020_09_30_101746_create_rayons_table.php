@@ -19,6 +19,11 @@ class CreateRayonsTable extends Migration
             $table->integer('quantite_stock');
             $table->timestamps();
         });
+
+        Schema::create('rayon_categorie', function (Blueprint $table) {
+            $table->integer('rayon_id');
+            $table->integer('categorie_id');
+        });
     }
 
     /**
@@ -29,5 +34,6 @@ class CreateRayonsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('rayons');
+        Schema::dropIfExists('rayon_categorie');
     }
 }

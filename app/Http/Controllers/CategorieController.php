@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Session;
 use Illuminate\Http\Request;
 use App\Models\Categorie;
+use App\Models\Rayon;
 
 class CategorieController extends Controller
 {
@@ -17,14 +18,16 @@ class CategorieController extends Controller
     {
         $auth = auth()->user();
         $categories = Categorie::paginate(5);
-        return view('admin.categorie.index', compact('categories', 'auth'));
+        $rayons = Rayon::all();
+        return view('admin.categorie.index', compact('categories', 'auth', 'rayons'));
     }
 
     public function indexResp()
     {
         $auth = auth()->user();
         $categories = Categorie::paginate(5);
-        return view('resp.categorie.index', compact('categories', 'auth'));
+        $rayons = Rayon::all();
+        return view('resp.categorie.index', compact('categories', 'auth', 'rayons'));
     }
 
     /**
@@ -65,16 +68,23 @@ class CategorieController extends Controller
      */
     public function store(Request $request)
     {
-
+        // dd($request->all());
+        // Validation formulaire
         $this->validate($request, [
             'nom' => 'required',
         ]);
 
-        Categorie::create([
+        // creation
+        $categorie = Categorie::create([
             'nom' => $request->nom,
         ]);
 
+        $categorie->rayons()->attach($request->rayons);
+
+        // flash si creation valider
         Session::flash('success', 'Une nouvelle categorie a été crée avec succès');
+
+        // redirection
         return redirect()->route('categorie.index');
     }
 
@@ -85,9 +95,11 @@ class CategorieController extends Controller
             'nom' => 'required',
         ]);
 
-        Categorie::create([
+        $categorie = Categorie::create([
             'nom' => $request->nom,
         ]);
+
+        $categorie->rayons()->attach($request->rayons);
 
         Session::flash('success', 'Une nouvelle categorie a été crée avec succès');
         return redirect()->route('cat');
@@ -122,7 +134,7 @@ class CategorieController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Categories $categorie)
+    public function update(Request $request, Categorie $categorie)
     {
         // dd($request->all());
         $this->validate($request, [
@@ -130,19 +142,23 @@ class CategorieController extends Controller
         ]);
 
         $categorie->nom = $request->nom;
+
+        $categorie->rayons()->sync($request->rayons);
         $categorie->save();
 
         Session::flash('success', 'La categorie a été modifiée avec succès');
         return redirect()->route('categorie.index');
     }
 
-    public function updateResp(Request $request, Categories $categorie)
+    public function updateResp(Request $request, Categorie $categorie)
     {
         $this->validate($request, [
             'nom' => 'required|unique:categories,nom,'.$categorie->id,
         ]);
 
         $categorie->nom = $request->nom;
+
+        $categorie->rayons()->sync($request->rayons);
         $categorie->save();
 
         Session::flash('success', 'La categorie a été modifiée avec succès');

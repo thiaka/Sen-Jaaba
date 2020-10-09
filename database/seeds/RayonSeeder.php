@@ -31,9 +31,15 @@ class RayonSeeder extends Seeder
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
             ],
+            [
+                'libelle' => 'Boucherie',
+                'quantite_stock' => 500,
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            ],
         ];
 
-        $ca_ray = [
+        $ray_cat = [
             [
                 'categorie_id' => 2,
                 'rayon_id' => 1,
@@ -63,16 +69,16 @@ class RayonSeeder extends Seeder
                 'rayon_id' => 3,
             ],
             [
-                'categorie_id' => 4,
+                'categorie_id' => 3,
                 'rayon_id' => 4,
             ],
             [
-                'categorie_id' => 10,
+                'categorie_id' => 9,
                 'rayon_id' => 4,
             ],
         ];
 
         DB::table('rayons')->insert($rayons);
-        DB::table('categorie_rayon')->insert($ca_ray);
+        DB::table('categorie_rayon')->insert($ray_cat);
     }
 }

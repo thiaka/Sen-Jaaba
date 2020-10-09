@@ -202,7 +202,7 @@ class UserController extends Controller
         ]);
 
         Session::flash('success', 'Un nouveau utilisateur a été crée avec succès');
-        return redirect()->route('utilisateur.index');
+        return redirect()->back();
     }
 
     /**
@@ -256,7 +256,7 @@ class UserController extends Controller
         $user_p->save();
 
         Session::flash('success', 'L\'utilisateur a été modifié avec succès');
-        return redirect()->route('utilisateur.index');
+        return redirect()->back();
     }
 
     /**

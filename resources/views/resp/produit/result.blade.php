@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.resp')
 
 @section('content')
 <!-- Start Content-->
@@ -10,7 +10,7 @@
             <div class="page-title-box">
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="/admin/dashboard">Sen Jaaba</a></li>
+                        <li class="breadcrumb-item"><a href="/dashboard">Sen Jaaba</a></li>
                         <li class="breadcrumb-item active">Produits</li>
                     </ol>
                 </div>
@@ -30,7 +30,7 @@
         </div>
 
         <div class="col-md-6">
-            <form action="{{ route('produit.search') }}" method="get">
+            <form action="{{ route('pro.search') }}" method="get">
                 <div class="input-group">
                     <input type="text" name="search_query" class="form-control" placeholder="Rechercher un produit">
                     <span class="input-group-append">
@@ -120,7 +120,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ route('produit.store') }}" method="POST">
+                <form action="{{ route('pro.store') }}" method="POST">
                     @csrf
                     <div class="modal-body">
                         <div class="row">
@@ -212,7 +212,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ route('produit.update', [$produit->id]) }}" method="POST">
+                <form action="{{ route('pro.update', [$produit->id]) }}" method="POST">
                     @method('PUT')
                     @csrf
                     <div class="modal-body">
@@ -299,7 +299,7 @@
             <div class="modal-content">
 
 
-                <form action="{{ route('produit.destroy', [$produit->id]) }}" method="POST">
+                <form action="{{ route('pro.destroy', [$produit->id]) }}" method="POST">
                     @method('DELETE')
                     @csrf
                     <div class="swal2-container swal2-center swal2-fade swal2-shown" style="overflow-y: auto;">
@@ -370,7 +370,7 @@
 
                 $.ajax ({
                     type : 'get',
-                    url: '{!!URL::to('/admin/findRayon')!!}',
+                    url: '{!!URL::to('findRayonR')!!}',
                     data : { 'id' : categorie_id },
                     success : function(data){
                         op+='<option value="0" >Choisir le rayon</option>';
